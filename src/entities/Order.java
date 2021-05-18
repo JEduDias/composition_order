@@ -60,4 +60,12 @@ public class Order {
 		items.remove(item);
 	}
 	
+	public double total() {
+		double total = 0;
+		for (OrderItem i: items) {
+		total += i.subTotal();
+		}
+		return total;
+	}
+	
 }
