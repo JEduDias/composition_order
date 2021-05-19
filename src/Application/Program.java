@@ -2,11 +2,15 @@ package Application;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Scanner;
 
 import entities.Client;
+import entities.Order;
+import entities.OrderItem;
 import entities.Product;
+import entities.enums.OrderStatus;
 
 public class Program {
 
@@ -30,15 +34,35 @@ public class Program {
 		Client client = new Client(name, email, birthDate);
 		
 		System.out.println("Enter order data:");
+		Date moment = Date.from(Instant.parse("ss/MM/yyyy HH:mm:ss"));
+		System.out.print("Status: ");
+		String status = sc.nextLine();
+		
+		Order order = new Order(moment, OrderStatus.valueOf(status), client);
+		
 		System.out.println("How many items to this order?");
 		int N = sc.nextInt();
+		for (int i=0; i<N; i ++) {
+			
+		
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 		for (int i=0; i< N; i++) {
 			System.out.print("Enter #"+ i+1 + " item data:");
 			System.out.print("Product name: ");
 			String productName = sc.nextLine();
 			System.out.print("Product price: ");
 			Double productPrice = sc.nextDouble();
-			Product product = new Product(productName, productPrice);
+			System.out.println("Quantity: ");
+			Integer quantity = sc.nextInt();
+			OrderItem orderItem = new OrderItem(quantity, productPrice);
 		}
 		
 		
