@@ -2,8 +2,8 @@ package Application;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 import entities.Client;
@@ -16,12 +16,14 @@ public class Program {
 
 	public static void main(String[] args) throws ParseException {
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 		
 		String name, email;
 		Date birthDate;
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		System.out.println("Enter cliente data:");
 		System.out.print("Name: ");
@@ -34,39 +36,32 @@ public class Program {
 		Client client = new Client(name, email, birthDate);
 		
 		System.out.println("Enter order data:");
-		Date moment = Date.from(Instant.parse("ss/MM/yyyy HH:mm:ss"));
 		System.out.print("Status: ");
-		String status = sc.nextLine();
+		OrderStatus status = OrderStatus.valueOf(sc.next());
 		
-		Order order = new Order(moment, OrderStatus.valueOf(status), client);
+		Order order = new Order(new Date(), status, client);
 		
-		System.out.println("How many items to this order?");
+		System.out.print("How many items to this order?");
 		int N = sc.nextInt();
-		for (int i=0; i<N; i ++) {
-			
-		
-		}
-		
-		
-		
-		
-		
-		
-		
-		
 		for (int i=0; i< N; i++) {
-			System.out.print("Enter #"+ i+1 + " item data:");
+			System.out.println("Enter #"+ (i+1) + " item data:");
 			System.out.print("Product name: ");
+			sc.nextLine();
 			String productName = sc.nextLine();
 			System.out.print("Product price: ");
 			Double productPrice = sc.nextDouble();
-			System.out.println("Quantity: ");
+			System.out.print("Quantity: ");
 			Integer quantity = sc.nextInt();
-			OrderItem orderItem = new OrderItem(quantity, productPrice);
+			
+			Product product = new Product(productName, productPrice);
+			
+			OrderItem orderItem = new OrderItem(quantity, productPrice, product);
+			
+			order.addItem(orderItem);
 		}
 		
-		
-		
+		System.out.println();
+		System.out.println(order);
 		
 		sc.close();
 	}
